@@ -1,33 +1,19 @@
-class Goods:
+class Buyer:
     """
-    Class implements methods and data about some goods
+    This class represents a buyer
     """
-    def __init__(self, name, price, description, dimensions):
+
+    def __init__(self, name, surname, address, phone, email):
         self.name = name
-        self.price = price
-        self.description = description
-        self.photo = None
-        self.dimensions = {
-            "height": dimensions[0],
-            "width": dimensions[1],
-            "length": dimensions[2]
-        }
+        self.surname = surname
+        self.address = address
+        self.phone = phone
+        self.email = email
 
     def __str__(self):
-        res = f'Name: {self.name}\n'
-        res += f'Price: {self.price}\n'
-        res += f'Description: {self.description}\n'
-        res += f'Photo: {self.photo}\n'
-        res += f'Dimensions: {self.dimensions}\n'
-        res += f'Volume: {self._get_volume()}'
-        return res
-
-    def _get_volume(self):
-        return self.dimensions["length"] * self.dimensions["width"] * self.dimensions["height"]
+        return f'{self.name} {self.surname} \n{self.address} \n{self.phone} \n{self.email}'
 
 
-goods1 = Goods('Mouse', 1300, "Bloody gaming max 10k sensor", [10, 15, 7.5])
-goods2 = Goods('Keyboard', 2500, "Hator rockfall evo TCL", [5, 15, 30])
+buyer1 = Buyer("Oleh", "Radchenko", "My address", "0998877665", "test@test.test")
+print(buyer1)
 
-print(goods1)
-print(goods2)
