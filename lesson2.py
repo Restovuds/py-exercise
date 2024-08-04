@@ -40,6 +40,7 @@ class B:
 class D(A, B):
     pass
 
+
 # x = D()
 # print(x.method_1())  # Hello from A
 
@@ -47,3 +48,14 @@ class D(A, B):
 # #  (<class '__main__.D'>, <class '__main__.A'>, <class '__main__.B'>, <class 'object'>)
 
 # HOMEWORK #############################################################################################################
+# task 1
+class Human:
+    def __init__(self, firstname, second_name, surname):
+        self.firstname = firstname
+        self.second_name = second_name
+        self.surname = surname
+
+    def __str__(self):
+        return f'{self.surname} {self.firstname} {self.second_name}'
+
+
