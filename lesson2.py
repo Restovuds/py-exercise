@@ -52,6 +52,26 @@ class D(A, B):
 
 # HOMEWORK #############################################################################################################
 # task 1
+
+# homework from lesson 3. Task 2 #
+
+class StudentInGroupException(Exception):
+    """
+    Exception raised for errors related to the number of students in the group.
+    """
+    def __init__(self, expression, message):
+        """
+        :param expression:
+        :param message:
+        """
+        self.expression = expression
+        self.message = message
+
+    def __str__(self):
+        return f'{self.message}: {self.expression}'
+
+# end of this task #
+
 class Human:
     """
     defines person
@@ -99,7 +119,6 @@ class Group():
 
     def __init__(self, name: str):
         """
-
         :param name: name of the group
         """
         self.name = name
@@ -107,14 +126,13 @@ class Group():
 
     def add_student(self, student: Student) -> int:
         """
-
         :param student: obj of Student
         :return: -1 when students more than allowed
                 1 when student was added
                 -2 when student already is in this group
         """
         if len(self.students) >= settings.MAX_STUDENTS:
-            return -1
+            raise StudentInGroupException(settings.MAX_STUDENTS, "Maximum number of students allowed")
 
         if student not in self.students:
             self.students.append(student)
@@ -124,6 +142,7 @@ class Group():
 
     def remove_student(self, student: Student) -> int:
         """
+        :type student: object
         :param student: obj of Student
         :return: 1 when student was removed
                 -1 when student not found in this group
@@ -168,9 +187,12 @@ if __name__ == '__main__':
     students.append(Student("Єрченко", "Златодан", '12-12-12'))
 
     for student in students:
-        group.add_student(student)
+        try:
+            group.add_student(student)
+        except StudentInGroupException as e:
+            print(e)
 
     print(group)
-    #group.remove_student(students[-2])
-    #print(group)
-    #print("".join(map(str, group.search_student('Радченко'))))
+    # group.remove_student(students[-2])
+    # print(group)
+    # print("".join(map(str, group.search_student('Радченко'))))
