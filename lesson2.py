@@ -1,3 +1,6 @@
+import settings
+
+
 # lesson code #
 
 class ABase:
@@ -50,81 +53,124 @@ class D(A, B):
 # HOMEWORK #############################################################################################################
 # task 1
 class Human:
-    def __init__(self, first_name, surname, second_name):
-        self.first_name = first_name
-        self.second_name = second_name
+    """
+    defines person
+    """
+
+    def __init__(self, name: str, surname: str):
+        """
+        :param name: name op person
+        :param surname: surname of person
+        """
+        self.name = name
         self.surname = surname
 
-    def __str__(self):
-        return f'{self.surname} {self.first_name} {self.second_name}\n'
+    def __str__(self) -> str:
+        return f'{self.surname} {self.name}'
+
 
 # task 2
 class Student(Human):
-    def __init__(self, first_name, surname, second_name, receipt_date):
-        super().__init__(first_name, surname, second_name)
-        self.receipt_date = receipt_date
+    """
+    defines student
+    """
+
+    def __init__(self, name: str, surname: str, date_of_birth: str):
+        """
+        :param name: name op person
+        :param surname: surname of person
+        :param date_of_birth: date of birth of person
+        """
+        super().__init__(name, surname)
+        self.date_of_birth = date_of_birth
 
     def __str__(self):
-        return f'{self.surname} {self.first_name[0]}. {self.second_name[0]}. \t{self.receipt_date}\n'
+        return f'\t{ super().__str__()} - {self.date_of_birth}'
+
 
 # task 3
+COUNT_OF_STUDENTS = 10
+
+
 class Group():
-    def __init__(self, name):
+    """
+    defines group of students
+    """
+
+    def __init__(self, name: str):
+        """
+
+        :param name: name of the group
+        """
         self.name = name
         self.students = []
 
-    def add_student(self, student):
-        if len(self.students) == 10:
-            print(f'To much students in this group. Create the new one.')
-            return False
+    def add_student(self, student: Student) -> int:
+        """
+
+        :param student: obj of Student
+        :return: -1 when students more than allowed
+                1 when student was added
+                -2 when student already is in this group
+        """
+        if len(self.students) >= settings.MAX_STUDENTS:
+            return -1
+
         if student not in self.students:
             self.students.append(student)
-        else:
-            print(f'Student {student} already in this group.')
+            return 1
 
-    def remove_student(self, student):
+        return -2
+
+    def remove_student(self, student: Student) -> int:
+        """
+        :param student: obj of Student
+        :return: 1 when student was removed
+                -1 when student not found in this group
+        """
         if student in self.students:
             self.students.remove(student)
-        else:
-            print(f'Student {student} not in this group.')
+            return 1
 
-    def search_student(self, surname):
+        return -1
+
+    def search_student(self, surname: str) -> list:
+        """
+        :param surname: surname of student
+        :return: list of students
+        """
         res = []
         for student in self.students:
-            if student.surname.find(surname) > -1:
+            if student.surname.lower() == surname.lower():
                 res.append(student)
 
         return res
 
     def __str__(self):
-        res = f'Group: {self.name}\n'
-        res += f'Students list:\n'
-        res += ''.join(map(str, self.students))
+        res = f'Group: {self.name} \n Students list: \n ' + '\n'.join(map(str, self.students))
         return res
+
 
 if __name__ == '__main__':
     group = Group('410-i')
 
     students = []
-    students.append(Student("Антків", "Твердогоста" ,"Устимівна", ''))
-    students.append(Student("Трощинська", "Чеслава" ,"Костянтинівна", ''))
-    students.append(Student("Улицька", "Купава" ,"Левівна", ''))
-    students.append(Student("Ерстенюк", "Евеліна" ,"Борисівна", ''))
-    students.append(Student("Забіла", "Радченко" ,"Федорівна", ''))
-    students.append(Student("Марковичі", "Радченко" ,"Соломонівна", ''))
-    students.append(Student("Їжакевич", "Далемир" ,"Тарасович", ''))
-    students.append(Student("Лугова", "Єкатерина" ,"Добромирівна", ''))
-    students.append(Student("Харченко", "Братко" ,"Іванович", ''))
-    students.append(Student("Якобовський", "Ус" ,"Світанович", ''))
-    students.append(Student("Єрченко", "Златодан" ,"Світанович", ''))
+    students.append(Student("Антків", "Твердогоста", '12-12-12'))
+    students.append(Student("Трощинська", "Чеслава", '12-12-12'))
+    students.append(Student("Улицька", "Купава", '12-12-12'))
+    students.append(Student("Ерстенюк", "Евеліна", '12-12-12'))
+    students.append(Student("Забіла", "Радченко", '12-12-12'))
+    students.append(Student("Марковичі", "Радченко", '12-12-12'))
+    students.append(Student("Їжакевич", "Далемир", '12-12-12'))
+    students.append(Student("Лугова", "Єкатерина", '12-12-12'))
+    students.append(Student("Харченко", "Братко", '12-12-12'))
+    students.append(Student("Якобовський", "Ус", '12-12-12'))
+    students.append(Student("Єрченко", "Златодан", '12-12-12'))
 
     for student in students:
         group.add_student(student)
 
     print(group)
-
-    group.remove_student(students[-2])
-
-    print(group)
-
-    print("".join(map(str,group.search_student('Радченко'))))
+    #group.remove_student(students[-2])
+    #print(group)
+    #print("".join(map(str, group.search_student('Радченко'))))
