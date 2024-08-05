@@ -142,3 +142,38 @@
 #     logger.warning("Hello world warning")
 #     logger.critical("fffffff")
 #     logger.info("finish logging")
+
+########################################################################################################################
+########################################################################################################################
+########################################################################################################################
+
+# homework. Task 1
+
+class InputError(Exception):
+    """
+    Exception raised for errors in the input.
+    """
+    def __init__(self, expression, message):
+        """
+        :param expression: input expression in which the error occurred.
+        :param message: explanation of the error.
+        """
+        self.expression = expression
+        self.message = message
+
+    def __str__(self):
+        return f'{self.message}: {self.expression}'
+
+
+try:
+    my_num = float(input("Enter the price: "))
+    if my_num < 0:
+        raise InputError(my_num, "The num is negative")
+except (ValueError, InputError) as err:
+    print(err)
+else:
+    print(f"The price is {my_num}")
+
+# homework. Task 2 ###########################################
+
+
