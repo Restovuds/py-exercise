@@ -10,13 +10,20 @@ class Fraction:
     """
 
     def __init__(self, num: int, den: int):
+        if not isinstance(num, int):
+            raise TypeError('num must be an integer')
+        if not isinstance(den, int):
+            raise TypeError('den must be an integer')
         if num > den:
             raise TypeError("The numerator must be greater than the denominator.")
-        if den <= 0:
+        if den < 0:
             raise TypeError("The denominator must be greater than zero.")
+        if den == 0:
+            raise ZeroDivisionError("The denominator cannot be zero.")
 
-        self.num = num
-        self.den = den
+        tmp = math.gcd(num, den)
+        self.num = num // tmp
+        self.den = den // tmp
 
     def __str__(self) -> str:
         """
@@ -189,10 +196,11 @@ if __name__ == '__main__':
         # fractions = [Fraction(random.randint(1, 5), random.randint(5, 10)) for _ in range(10)]
         # print('\n'.join(map(str, fractions)))
 
-        fr_1 = Fraction(1, 2)
+        fr_1 = Fraction(2, 4)
         fr_2 = Fraction(2, 77)
+        fr_3 = Fraction(2, 7)
         print(fr_1, fr_2, sep='\n')
-        print(fr_1 - fr_2)
+        print(fr_1 + fr_2 + fr_3)
 
     except ValueError as error:
         print(error)
