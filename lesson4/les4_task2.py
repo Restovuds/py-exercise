@@ -11,9 +11,9 @@ class Fraction:
 
     def __init__(self, num: int, den: int):
         if num > den:
-            raise ValueError("The numerator must be greater than the denominator.")
+            raise TypeError("The numerator must be greater than the denominator.")
         if den <= 0:
-            raise ValueError("The denominator must be greater than zero.")
+            raise TypeError("The denominator must be greater than zero.")
 
         self.num = num
         self.den = den

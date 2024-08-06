@@ -3,6 +3,16 @@ class Rectangle:
     Class describing a rectangle.
     """
     def __init__(self, w: int | float, h: int | float):
+        if not isinstance(w, (int | float)):
+            raise TypeError('Width (w) must be an integer or float')
+        if not isinstance(h, (int | float)):
+            raise TypeError('Height (h) must be an integer or float')
+
+        if w <= 0:
+            raise ValueError('Width (w) must be greater than or equal to zero')
+        if h <= 0:
+            raise ValueError('Height (h) must be greater than or equal to zero')
+
         self.w = w
         self.h = h
 
