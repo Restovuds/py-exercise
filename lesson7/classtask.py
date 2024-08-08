@@ -19,6 +19,9 @@ def prime_gen(my_num):
 
 
 a = 100
-for i in prime_gen(a):
-    print(i)
+# for i in prime_gen(a):
+#     print(i)
+
+x = list(prime_gen(a))
+print(x)
 

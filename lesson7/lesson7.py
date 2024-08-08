@@ -12,11 +12,21 @@ def gen_funk(start, stop):
 
 
 x = func(10, 20)
-print(x)
+# print(x)
 
 
 y = gen_funk(10, 20)
-print(y)
+# print(y)
 
-for item in y:
-    print(item)
+# for item in y:
+#     print(item)
+
+#####################################
+
+# generator OBJECT >
+z = (i * i for i in range(10))
+print(z)  # generator OBJECT >
+print([i for i in z])
+
+#####################################
+
