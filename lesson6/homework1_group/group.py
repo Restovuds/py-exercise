@@ -69,3 +69,12 @@ class Group:
 
     def __str__(self) -> str:
         return f'Group: {self.name} \n Students list: \n ' + '\n'.join(map(str, self.students))
+
+    def __len__(self) -> int:
+        return len(self.students)
+
+    def __getitem__(self, index: int) -> Student:
+        if not isinstance(index, (slice, int)):
+            raise TypeError('Index must be an integer or slice')
+
+        return self.students[index]

@@ -1,5 +1,6 @@
 from customer import Customer
 from product import Product
+from card_iter import CardIter
 
 
 class Cart:
@@ -41,6 +42,9 @@ class Cart:
     def __getitem__(self, index) -> Product:
         if isinstance(index, (slice, int)):
             return self.products[index]
+
+    def __iter__(self):
+        return CardIter(self.products)
 
     def __str__(self) -> str:
         res = f'{self.customer} \n'

@@ -1,4 +1,4 @@
-class GroupIter:
+class CardIter:
     def __init__(self, wrapped):
         self.wrapped = wrapped
         self.index = 0
@@ -11,5 +11,5 @@ class GroupIter:
         if self.index < len(self.wrapped):
             self.index += 1
             return self.wrapped[self.index - 1]
-
-        raise StopIteration
+        else:
+            raise StopIteration
