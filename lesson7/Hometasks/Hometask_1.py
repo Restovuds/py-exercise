@@ -3,11 +3,16 @@ def gen_geometry(n, limit):
     for i in range(limit):
         if i != 0:
             res = res * n
-            yield res
+            command = yield res
+            if command:
+                return None
 
 
-x = gen_geometry(5, 100)
-for i in x:
-    print(i)
-    # if i > 100_000_000:
-    #     x.close()
+x = gen_geometry(5, 1000)
+try:
+    for item in x:
+        print(item)
+        if item > 1000:
+            x.send('stop')
+except StopIteration:
+    pass
