@@ -16,6 +16,3 @@ def fibonacci():
 fibo = fibonacci()
 for i in range(1, 100):
     print(fibo(i))
-
-
-
