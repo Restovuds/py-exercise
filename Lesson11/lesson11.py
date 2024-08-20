@@ -62,6 +62,38 @@ obj_1 = Dog()
 obj_2 = Cat()
 obj_3 = Duck()
 
-print(animal_farm(obj_1))
-print(animal_farm(obj_2))
-print(animal_farm(obj_3))
+
+# print(animal_farm(obj_1))
+# print(animal_farm(obj_2))
+# print(animal_farm(obj_3))
+
+class AbstractValidator(abc.ABC):
+    @abc.abstractmethod
+    def validate(self, text):
+        pass
+
+
+class NumberValidator(AbstractValidator):
+    def __init__(self, text):
+        self.text = text
+
+    def __str__(self):
+        return str(self.text)
+
+    def validate(self, text):
+        for sym in text:
+            if sym in self.text:
+                return True
+        return False
+
+
+class Box:
+    def __init__(self, x, y, z):
+        self.x = x
+        self.y = y
+        self.z = z
+
+
+AbstractValidator.register(Box)
+box_1 = Box(1, 2, 3)
+print(isinstance(box_1, AbstractValidator))
