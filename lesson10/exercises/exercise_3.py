@@ -7,13 +7,13 @@ class LoggedProperty:
     def __init__(self, name):
         self.name = name
 
-    def __set__(self, instance, value):
+    def __set__(self, instance_self, value):
         print(f'Setting {self.name} to {value}')
-        instance.__dict__[self.name] = value
+        instance_self.__dict__[self.name] = value
 
-    def __get__(self, instance, owner):
+    def __get__(self, instance_self, instance_class):
         print(f'Getting {self.name}')
-        return instance.__dict__[self.name]
+        return instance_self.__dict__[self.name]
 
 
 class User:
@@ -26,6 +26,7 @@ class User:
 
     def __str__(self):
         return f'{self.login} {self.password}'
+
 
 u1 = User('admin', '<PASSWORD>')
 print(u1)

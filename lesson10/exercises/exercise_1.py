@@ -13,18 +13,18 @@ class Temperature:
         def __get__(self, instance, owner):
             return instance.__dict__['_celsius']
 
-        def __set__(self, instance, value):
-            instance.__dict__['_celsius'] = value
-            instance.__dict__['_kelvin'] = value + 273.15
-            instance.__dict__['_fahrenheit'] = value * 9 / 5 + 32
+        def __set__(self, instance_self, value):
+            instance_self.__dict__['_celsius'] = value
+            instance_self.__dict__['_kelvin'] = value + 273.15
+            instance_self.__dict__['_fahrenheit'] = value * 9 / 5 + 32
 
     class Fahrenheit:
-        def __get__(self, instance, owner):
-            return instance.__dict__['_fahrenheit']
+        def __get__(self, instance_self, instance_class):
+            return instance_self.__dict__['_fahrenheit']
 
     class Kelvin:
-        def __get__(self, instance, owner):
-            return instance.__dict__['_kelvin']
+        def __get__(self, instance_self, instance_class):
+            return instance_self.__dict__['_kelvin']
 
     celsius = Celsius()
     fahrenheit = Fahrenheit()

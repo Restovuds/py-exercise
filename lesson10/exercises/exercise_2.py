@@ -5,23 +5,23 @@
 
 
 class PersonName:
-    def __get__(self, instance, owner):
-        return instance._name
+    def __get__(self, instance_self, instance_class):
+        return instance_self._name
 
-    def __set__(self, instance, value):
+    def __set__(self, instance_self, value):
         if not isinstance(value, str):
             raise TypeError("Name must be str")
-        instance.__dict__['_name'] = value
+        instance_self.__dict__['_name'] = value
 
 
 class PersonAge:
-    def __get__(self, instance, owner):
-        return instance._age
+    def __get__(self, instance_self, instance_class):
+        return instance_self._age
 
-    def __set__(self, instance, value):
+    def __set__(self, instance_self, value):
         if not isinstance(value, int):
             raise TypeError("Age must be int")
-        instance.__dict__['_age'] = value
+        instance_self.__dict__['_age'] = value
 
 
 class Person:
