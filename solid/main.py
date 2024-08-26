@@ -1,9 +1,11 @@
 # solid
 
-# Single responsibility # Принцип єдиної відповідальності
-# Open-closed # Принцип відкритості-закритості
-# Liskov substitution principle / LSP # Принцип підстановки Барбари Лисков
-# Interface segregation # Принцип поділу інтерфейсів
+# Single responsibility # SRP # Принцип єдиної відповідальності
+# Open-closed #	OCP # Принцип відкритості-закритості
+# Liskov substitution principle # LSP # Принцип підстановки Барбари Лисков
+# Interface segregation principle # ISP # Принцип розподілу інтерфейсу
+# Dependency inversion principle # DIP # Принцип інверсії залежностей
+
 
 from abc import ABC, abstractmethod
 
@@ -26,16 +28,46 @@ class Order:
         return total
 
 
-class SMSAuthorizer:
+class Authorizer(ABC):
+    @abstractmethod
+    def is_authorised(self) -> bool:
+        pass
+
+
+class AuthorizerSMS(Authorizer):
     def __init__(self):
-        self.authorized = False
+        self.authorised = False
 
     def verify_code(self, code):
-        print(f'Verifying SMS code: {code}')
-        self.authorized = True
+        print(f'Verifying code: {code}')
+        self.authorised = True
 
-    def is_authorized(self):
-        return self.authorized
+    def is_authorised(self) -> bool:
+        return self.authorised
+
+
+class AuthorizerGoogle(Authorizer):
+    def __init__(self):
+        self.authorised = False
+
+    def verify_code(self, code):
+        print(f'Verifying code: {code}')
+        self.authorised = True
+
+    def is_authorised(self) -> bool:
+        return self.authorised
+
+
+class AuthorizerRobot(Authorizer):
+    def __init__(self):
+        self.authorised = False
+
+    def not_a_robot(self, code):
+        print(f'Verifying code: {code}')
+        self.authorised = True
+
+    def is_authorised(self) -> bool:
+        return self.authorised
 
 
 class PaymentProcessor(ABC):
@@ -44,19 +76,13 @@ class PaymentProcessor(ABC):
         pass
 
 
-# class PaymentProcessorSMS(PaymentProcessor):
-#     @abstractmethod
-#     def auth_sms(self, code):
-#         pass
-
-
 class DebitPaymentProcessor(PaymentProcessor):
-    def __init__(self, security_code: str, authorizer: SMSAuthorizer):
+    def __init__(self, security_code: str, authorizer: Authorizer):
         self.security_code = security_code
         self.authorizer = authorizer
 
     def pay(self, order: Order):
-        if not self.authorizer.is_authorized():
+        if not self.authorizer.is_authorised():
             raise Exception('Not authorized')
         print('Processing debit payment type')
         print(f'Verifying security code: {self.security_code}')
@@ -74,12 +100,12 @@ class CreditPaymentProcessor(PaymentProcessor):
 
 
 class PayPallPaymentProcessor(PaymentProcessor):
-    def __init__(self, email: str, authorizer: SMSAuthorizer):
+    def __init__(self, email: str, authorizer: Authorizer):
         self.email = email
         self.authorizer = authorizer
 
     def pay(self, order: Order):
-        if not self.authorizer.is_authorized():
+        if not self.authorizer.is_authorised():
             raise Exception('Not authorized')
         print('Processing PayPall payment type')
         print(f'Verifying email: {self.email}')
@@ -93,8 +119,8 @@ order.add_item('SSD', 1, 150)
 order.add_item('USB cable', 2, 5)
 
 print(order.total_price())
-authorizer = SMSAuthorizer()
-authorizer.verify_code(123456)
+authorizer = AuthorizerRobot()
+authorizer.not_a_robot(123456)
 processor = PayPallPaymentProcessor('test@test.com', authorizer)
 processor.pay(order)
 
