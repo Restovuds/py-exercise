@@ -1,7 +1,8 @@
 # solid
 
-# Single responsibility
-# Open-closed
+# Single responsibility # Принцип єдиної відповідальності
+# Open-closed # Принцип відкритості-закритості
+# Liskov substitution principle / LSP # Принцип підстановки Барбари Лисков
 
 
 from abc import ABC, abstractmethod
@@ -30,23 +31,38 @@ class Order:
 
 class PaymentProcessor(ABC):
     @abstractmethod
-    def pay(self, order: Order, security_code: str):
+    def pay(self, order: Order):
         pass
 
 
 class DebitPaymentProcessor(PaymentProcessor):
-    def pay(self, order: Order, security_code: str):
+    def __init__(self, security_code: str):
+        self.security_code = security_code
+
+    def pay(self, order: Order):
         print('Processing debit payment type')
-        print(f'Verifying security code: {security_code}')
+        print(f'Verifying security code: {self.security_code}')
         order.status = 'paid'
 
 
 class CreditPaymentProcessor(PaymentProcessor):
-    def pay(self, order: Order, security_code: str):
+    def __init__(self, security_code: str):
+        self.security_code = security_code
+
+    def pay(self, order: Order):
         print('Processing credit payment type')
-        print(f'Verifying security code: {security_code}')
+        print(f'Verifying security code: {self.security_code}')
         order.status = 'paid'
 
+
+class PayPallPaymentProcessor(PaymentProcessor):
+    def __init__(self, email: str):
+        self.email = email
+
+    def pay(self, order: Order):
+        print('Processing payment type')
+        print(f'Verifying email: {self.email}')
+        order.status = 'paid'
 
 
 
@@ -57,8 +73,9 @@ order.add_item('USB cable', 2, 5)
 
 print(order.total_price())
 
-processor = DebitPaymentProcessor()
-processor.pay(order, '0372846')
+processor = DebitPaymentProcessor('0372846')
+
+processor.pay(order)
 
 
 
